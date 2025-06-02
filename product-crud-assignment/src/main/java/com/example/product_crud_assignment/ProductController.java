@@ -8,40 +8,45 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
   
-
-  private final ProductService productService;
-
 @Autowired
-  public ProductController(ProductService productService) {
-      this.productService = productService;
-  }
+private ProductServiceImpl productService;
+public ProductController(ProductServiceImpl productService) {
+    this.productService = productService;
+}
+
+
+
  // Create
  @PostMapping
  public Product createProduct(@RequestBody Product product) {
-     return productService.createProduct(product);
+     Product newProduct = productService.createProduct(product);
+     return newProduct;
  }
 
  // Read all
  @GetMapping
  public List<Product> getAllProducts() {
-     return productService.getAllProducts();
+     List<Product> allProducts = productService.getAllProducts();
+     return allProducts;
  }
 
  // Read by ID
  @GetMapping("/{id}")
- public Product getProductById(@PathVariable String id) {
-     return productService.getProductById(id);
+ public Product getProductById(@PathVariable Long id) {
+    Product product = productService.getProductById(id);
+    return product;
  }
 
  // Update
  @PutMapping("/{id}")
- public Product updateProduct(@PathVariable String id, @RequestBody Product updatedProduct) {
-     return productService.updateProduct(id, updatedProduct);
+ public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    Product updateProduct = productService.updateProduct(id, product);
+    return updateProduct;
  }
 
  // Delete
  @DeleteMapping("/{id}")
- public void deleteProduct(@PathVariable String id) {
+ public void deleteProduct(@PathVariable Long id) {
      productService.deleteProduct(id);
  }
 }
